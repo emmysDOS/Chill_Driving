@@ -5,12 +5,16 @@ public class WheelMeshHandler : MonoBehaviour
 {
     private InputManager _inputManager;
     private CarController _carController;
+
     [SerializeField] private Transform[] turnWheels;
     [SerializeField] private Transform[] wheels;
+
     [SerializeField] private GameObject turnWheelsParent;
     [SerializeField] private GameObject WheelsParent;
+
     [SerializeField] private float turnAcceleration;
     [SerializeField] private byte maxTurn;
+
     private int _yRot;
     public float speedFactor;
 
@@ -18,6 +22,7 @@ public class WheelMeshHandler : MonoBehaviour
     {
         _inputManager = GetComponent<InputManager>();
         _carController = GetComponent<CarController>();
+
         turnWheels = new Transform[ turnWheelsParent.transform.childCount];
         for (int i = 0; i < turnWheels.Length; i++)
             turnWheels[i] = turnWheelsParent.transform.GetChild(i);
@@ -45,7 +50,7 @@ public class WheelMeshHandler : MonoBehaviour
         foreach (Transform wheel in turnWheels)
             wheel.localRotation = Quaternion.Lerp(wheel.localRotation, Quaternion.Euler(0, _yRot, 90), turnAcceleration);
     }
-
+    //Speed needs to be fixed
     private void HandleSpeed()
     {
         float rotation = _carController.currentSpeed * speedFactor;

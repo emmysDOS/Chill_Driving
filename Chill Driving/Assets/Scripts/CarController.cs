@@ -32,6 +32,8 @@ public class CarController : MonoBehaviour
     [SerializeField] private float negativeTurnAcceleration;
 
 
+    [Space(2)]
+    [Header("WayPomts")]
     public Transform[] wayPoints;
     public GameObject wayPointsParent;
     public Transform currentWayPoint;
@@ -75,13 +77,20 @@ public class CarController : MonoBehaviour
     {
         targetTurn = turnFactor * turnInput;
         currentTurn = Mathf.SmoothStep(currentTurn, targetTurn, Time.deltaTime * turnAcceleration);
+
+        bool isForward = false;
+        isForward = currentSpeed > 0;
+
+        if (isForward)
+            turnInput = -turnInput;
         
         //This makes stopping turning faster than turning
         if (turnInput != 0)
             turnAcceleration = positiveTurnAcceleration;
         else
             turnAcceleration = negativeTurnAcceleration;
-        
+
+        //Applies rotation
         transform.Rotate(0, currentTurn, 0,Space.World);
     }
 
